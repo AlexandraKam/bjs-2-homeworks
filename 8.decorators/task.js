@@ -7,15 +7,15 @@ function cachingDecoratorNew(func) {
 		if (idx !== -1 ) {
 			console.log("Из кэша: " + cache[idx].value);
 			return "Из кэша: " + cache[idx].value;
-        }
-        let result = func(...args);
-        cache.push({hash, value: result});
-        if (cache.length > 5) {
-        	cache.shift();
-        }
-        console.log("Вычисляем: " + result);
-        return "Вычисляем: " + result; 
-    }
+		}
+		let result = func(...args);
+		cache.push({hash, value: result});
+		if (cache.length > 5) {
+			cache.shift();
+		}
+		console.log("Вычисляем: " + result);
+		return "Вычисляем: " + result; 
+	}
 	return wrapper;
 }
 
@@ -27,7 +27,7 @@ function debounceDecoratorNew(func, interval) {
 		clearTimeout(timeout);
 
 		timeout = setTimeout(function() {
-			func(args);
+			func(...args);
 			isCalled = false;
 		}, interval);
 
@@ -46,13 +46,13 @@ function debounceDecorator2(func, interval) {
 		clearTimeout(timeout);
 
 		timeout = setTimeout(function() {
-			func(args);
+			func(...args);
 			isCalled = false;
 			wrapper.count++;
 		}, interval);
 
 		if (!isCalled) {
-			func();
+			func(...args);
 			wrapper.count++;
 			isCalled = true;
 		}
